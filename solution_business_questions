@@ -1,0 +1,39 @@
+-- Question 1: Find the different payment methods, the number of transactions, and the number of quantities sold for each payment method.  
+
+select payment_method, count(invoice_id) as no_of_transaction , sum(quantity) as total_quantity from walmart
+group by payment_method;
+
+-- Question 2: Identify the highest rated category in each branch, displaying the branch, the category, and the average rating.  
+
+SELECT *
+FROM (
+    SELECT
+        branch,
+        category,
+        ROUND(CAST(AVG(rating) AS numeric),2) AS avg_rating,
+    row_number() over(partition by branch
+	order by avg(rating) desc) AS rown
+    FROM walmart
+    GROUP BY branch, category
+) t
+WHERE rown = 1;
+
+-- Question 3: Identify the busiest day for each branch based on the number of transactions.  
+
+select * from(
+SELECT 
+branch ,
+to_char(date,'day') as day_name,
+count(invoice_id) as total_transaction,
+row_number() over(partition by branch order by count(invoice_id)desc) as rown
+from walmart
+group by branch,to_char(date,'day')
+)t
+where rown =1;
+
+-- Question 4: Calculate the total quantity of items sold per payment method, listing the payment method and total quantity.  
+-- Question 5: Determine the average, minimum, and maximum rating of category for each city, listing the city, average rating, minimum rating, and maximum rating.  
+-- Question 6: Calculate the total profit for each category by considering total profit (unit price $\times$ quantity $\times$ profit margin), listing the category and total profit ordered from highest to lowest profit.  
+-- Question 7: Determine the most common (preferred) payment method for each branch, displaying the branch and the preferred method.  
+-- Question 8: Categorize sales into three shift groups (morning, afternoon, and evening) and find out the number of invoices/transactions for each shift.  
+-- Question 9: Identify the top five branches with the highest decrease ratio in revenue compared to the previous year (2022 vs. 2023).  
