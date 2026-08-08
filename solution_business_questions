@@ -32,7 +32,19 @@ group by branch,to_char(date,'day')
 where rown =1;
 
 -- Question 4: Calculate the total quantity of items sold per payment method, listing the payment method and total quantity.  
+
+select payment_method,sum(quantity) as quantity_sold from walmart
+group by payment_method
+
 -- Question 5: Determine the average, minimum, and maximum rating of category for each city, listing the city, average rating, minimum rating, and maximum rating.  
+
+SELECT city, 
+       ROUND(CAST(AVG(rating) AS numeric), 2) AS avg_rating, 
+       MIN(rating) AS min_rating, 
+       MAX(rating) AS max_rating 
+FROM walmart
+GROUP BY city;
+
 -- Question 6: Calculate the total profit for each category by considering total profit (unit price $\times$ quantity $\times$ profit margin), listing the category and total profit ordered from highest to lowest profit.  
 -- Question 7: Determine the most common (preferred) payment method for each branch, displaying the branch and the preferred method.  
 -- Question 8: Categorize sales into three shift groups (morning, afternoon, and evening) and find out the number of invoices/transactions for each shift.  
