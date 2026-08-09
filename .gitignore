@@ -1,0 +1,10 @@
+# Local database credentials
+.env
+
+# Jupyter runtime files
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+
+# Local Python environments
+my_env_sql/
